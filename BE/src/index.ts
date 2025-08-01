@@ -2,6 +2,7 @@ import express, { Express, Request, Response } from "express";
 import env from "./configs/environment";
 import connectDB from "./configs/database";
 import API_V1 from "./routes/v1/admin";
+import errorHandlingMiddleware from "./middlwares/errorHandlingMiddleware";
 
 const START_SERVER = () => {
   const app: Express = express();
@@ -12,6 +13,9 @@ const START_SERVER = () => {
 
   // API v1
   app.use("/api/v1", API_V1);
+
+  // Middleware for error handling
+  app.use(errorHandlingMiddleware);
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

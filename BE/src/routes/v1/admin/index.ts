@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 import topicRoute from "./topicRoute";
 
-const router = express.Router();
+const router: Router = Router();
 
 router.use("/topic", topicRoute);
 

@@ -1,8 +1,8 @@
-import express from "express";
-import topicController from "../../../controllers/admin/topicController";
+import { Router } from "express";
+import * as controller from "../../../controllers/admin/topicController";
 
-const router = express.Router();
+const router: Router = Router();
 
-router.get("/", topicController.getTopic);
+router.get("/", controller.getTopic);
 
 export default router;
