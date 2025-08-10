@@ -9,20 +9,20 @@ import {
 
 export class CreateSongDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Tên bài hát không được để trống!' })
   readonly title: string;
 
   @IsArray()
-  @IsString()
-  @IsNotEmpty({ each: true })
+  @IsString({ each: true })
+  @IsNotEmpty()
   readonly artists: string[];
 
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Ngày phát hành không được để trống!' })
   @IsDateString()
   readonly releasedDate: Date;
 
   @IsMilitaryTime()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: 'Thời lượng không được để trống!' })
   readonly duration: Date;
 
   @IsString()

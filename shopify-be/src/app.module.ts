@@ -15,7 +15,7 @@ import { Song } from './songs/song.entity';
       port: 5432,
       username: 'postgres',
       password: '123456',
-      entities: [Song ],
+      entities: [Song],
       synchronize: true,
     }),
     SongsModule,
