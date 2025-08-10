@@ -6,6 +6,11 @@ import { CreateSongDTO } from './dtos/create-songs-dto';
 import { DeleteResult } from 'typeorm/browser';
 import { UpdateSongDTO } from './dtos/update-songs-dto';
 import { UpdateResult } from 'typeorm/browser';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
 
 @Injectable()
 export class SongsService {
@@ -20,6 +25,16 @@ export class SongsService {
 
   findOne(id: number): Promise<Song | null> {
     return this.songsRepository.findOneBy({ id });
+  }
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Song>> {
+    // Thêm query builder
+    const queryBuilder = this.songsRepository.createQueryBuilder('song');
+
+    // Áp dụng sort(sắp xếp)
+    queryBuilder.orderBy('song.releasedDate', 'DESC');
+
+    return paginate<Song>(queryBuilder, options);
   }
 
   create(songDTO: CreateSongDTO): Promise<Song> {
