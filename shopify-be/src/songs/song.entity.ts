@@ -17,6 +17,6 @@ export class Song {
   @Column('time')
   duration: Date;
 
-  @Column('text')
+  @Column({ type: 'text', nullable: true })
   lyrics: string;
 }
