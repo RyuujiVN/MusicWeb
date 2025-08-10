@@ -8,11 +8,14 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { CreateSongDTO } from './dtos/create-songs-dto';
 import { SongsService } from './songs.service';
 import { Song } from './song.entity';
 import { DeleteResult } from 'typeorm';
+import { UpdateSongDTO } from './dtos/update-songs-dto';
+import { UpdateResult } from 'typeorm/browser';
 
 @Controller('songs')
 export class SongsController {
@@ -46,6 +49,14 @@ export class SongsController {
     id: number,
   ): Promise<Song | null> {
     return this.songService.findOne(id);
+  }
+
+  @Put(':id')
+  updateOne(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateSongDto: UpdateSongDTO,
+  ): Promise<UpdateResult> {
+    return this.songService.updateOne(id, updateSongDto);
   }
 
   @Delete(':id')
