@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   HttpStatus,
@@ -11,6 +12,7 @@ import {
 import { CreateSongDTO } from './dtos/create-songs-dto';
 import { SongsService } from './songs.service';
 import { Song } from './song.entity';
+import { DeleteResult } from 'typeorm';
 
 @Controller('songs')
 export class SongsController {
@@ -44,5 +46,16 @@ export class SongsController {
     id: number,
   ): Promise<Song | null> {
     return this.songService.findOne(id);
+  }
+
+  @Delete(':id')
+  deleteOne(
+    @Param(
+      'id',
+      new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
+    )
+    id: number,
+  ): Promise<DeleteResult> {
+    return this.songService.deleteOne(id);
   }
 }
