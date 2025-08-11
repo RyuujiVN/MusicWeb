@@ -5,6 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { SongsModule } from './songs/songs.module';
 import { Song } from './songs/song.entity';
+import { User } from './users/user.entity';
+import { Artist } from './artists/artist.entity';
+import { Playlist } from './playlists/playlist.entity';
+import { PlaylistsModule } from './playlists/playlists.module';
 
 @Module({
   imports: [
@@ -15,10 +19,11 @@ import { Song } from './songs/song.entity';
       port: 5432,
       username: 'postgres',
       password: '123456',
-      entities: [Song],
+      entities: [Song, User, Artist, Playlist],
       synchronize: true,
     }),
     SongsModule,
+    PlaylistsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
