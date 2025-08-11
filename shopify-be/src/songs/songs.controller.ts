@@ -12,11 +12,11 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateSongDTO } from './dtos/create-songs-dto';
+import { CreateSongDTO } from './dtos/create-songs.dto';
 import { SongsService } from './songs.service';
 import { Song } from './song.entity';
 import { DeleteResult } from 'typeorm';
-import { UpdateSongDTO } from './dtos/update-songs-dto';
+import { UpdateSongDTO } from './dtos/update-songs.dto';
 import { UpdateResult } from 'typeorm/browser';
 import { Pagination } from 'nestjs-typeorm-paginate';
 

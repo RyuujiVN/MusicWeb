@@ -3,6 +3,7 @@ import {
   IsDateString,
   IsMilitaryTime,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -13,9 +14,9 @@ export class CreateSongDTO {
   readonly title: string;
 
   @IsArray()
-  @IsString({ each: true })
+  @IsNumber({}, { each: true })
   @IsNotEmpty()
-  readonly artists: string[];
+  readonly artists;
 
   @IsNotEmpty({ message: 'Ngày phát hành không được để trống!' })
   @IsDateString()
