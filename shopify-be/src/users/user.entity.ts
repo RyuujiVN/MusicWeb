@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Playlist } from 'src/playlists/playlist.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -12,12 +13,17 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @OneToMany(() => Playlist, (playList) => playList.user)
   playLists: Playlist[];
+
+  constructor(partial: Partial<User>) {
+    Object.assign(this, partial);
+  }
 }
