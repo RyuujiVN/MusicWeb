@@ -1,0 +1,4 @@
+export const authConstants = {
+  secret:
+    'Ab2Or0kyky6Ebcl80Eo0BytbU4hnWTSf2kZBNG2xwAWj1YKdqXor8A3TZ5xBIPTLbAfvcVoJkxp2TcAh9sAabRNHvTT7TJE2ioNXKMnHIiYBNrrW6Mdq4EgfbM4F9C2dFliZIY7MbJrIqgESBhm54eebTynr4D4ghOT8rzKLcnClynz2snsV6mwXIsFycrpnYJklrYK',
+};
