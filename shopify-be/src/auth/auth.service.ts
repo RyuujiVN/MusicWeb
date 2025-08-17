@@ -5,12 +5,15 @@ import { LoginDTO } from './dtos/login.dto';
 import bcrypt from 'bcryptjs';
 import { plainToClass } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
+import { ArtistsService } from 'src/artists/artists.service';
+import { PayloadType } from './types';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private jwtService: JwtService,
+    private artistService: ArtistsService,
   ) {}
 
   async login(loginDTO: LoginDTO): Promise<{ accessToken: string }> {
@@ -23,10 +26,13 @@ export class AuthService {
     if (!passowrdMatched)
       throw new UnauthorizedException('Tài khoản hoặc mật khẩu sai!');
 
-    const payload = {
+    const payload: PayloadType = {
+      userId: user.id,
       email: user.email,
-      id: user.id,
     };
+
+    const artist = await this.artistService.findArtist(user.id);
+    if (artist) payload.artistId = artist.id;
 
     return {
       accessToken: this.jwtService.sign(payload),

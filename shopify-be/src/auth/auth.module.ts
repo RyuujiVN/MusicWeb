@@ -5,6 +5,7 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { authConstants } from './auth.constants';
+import { ArtistsModule } from 'src/artists/artists.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { authConstants } from './auth.constants';
         algorithm: 'HS256',
       },
     }),
+    ArtistsModule,
   ],
   providers: [AuthService, JwtStrategy],
   controllers: [AuthController],
