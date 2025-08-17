@@ -12,6 +12,7 @@ import { PlaylistsModule } from './playlists/playlists.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ArtistsModule } from './artists/artists.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -38,6 +39,7 @@ import databaseConfig from './config/database.config';
     PlaylistsModule,
     AuthModule,
     UsersModule,
+    ArtistsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
