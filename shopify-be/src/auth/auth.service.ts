@@ -6,7 +6,9 @@ import bcrypt from 'bcryptjs';
 import { plainToClass } from 'class-transformer';
 import { JwtService } from '@nestjs/jwt';
 import { ArtistsService } from 'src/artists/artists.service';
-import { PayloadType } from './types';
+import { Enable2FAType, PayloadType } from './types';
+import * as speakeasy from 'speakeasy';
+import { UpdateResult } from 'typeorm';
 
 @Injectable()
 export class AuthService {
@@ -37,5 +39,41 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload),
     };
+  }
+
+  async enable2FA(userId: number): Promise<Enable2FAType> {
+    const user = await this.userService.findOne({ id: userId });
+
+    if (user.enable2FA) return { secret: user.twoFASecret };
+
+    const secret = speakeasy.generateSecret();
+    user.twoFASecret = secret.base32;
+    await this.userService.updateSecretKey(user.id, user.twoFASecret);
+
+    return { secret: user.twoFASecret };
+  }
+
+  async validate2FAToken(
+    userId: number,
+    token: string,
+  ): Promise<{ verified: boolean }> {
+    try {
+      const user = await this.userService.findOne({ id: userId });
+
+      const verified = speakeasy.totp.verify({
+        secret: user.twoFASecret,
+        token: token,
+        encoding: 'base32',
+      });
+
+      if (verified) return { verified: true };
+      else return { verified: false };
+    } catch (error) {
+      throw new UnauthorizedException('Lỗi khi xác minh token');
+    }
+  }
+
+  async disable2FA(userId: number): Promise<UpdateResult> {
+    return await this.userService.disable2FA(userId);
   }
 }
